@@ -1,146 +1,148 @@
-# Docker Commands Reference Guide
+# Docker Command Notebook
 
-This document provides a comprehensive guide to commonly used Docker commands, along with their functionalities and usage examples. Whether you are starting with Docker or need a quick refresher, this guide has you covered.
+This document serves as a comprehensive guide to commonly used Docker commands, helping you manage images, containers, and more efficiently.
 
-Table of Contents
+## Purpose
 
-Downloading and Running Docker Images
+This notebook is designed to:
 
-Managing Containers
+1. Help users understand key Docker commands.
 
-Copying Files
+2. Serve as a quick reference for daily Docker operations.
 
-Exporting and Importing Images
+3. Provide examples and explanations for container management.
 
-Advanced Commands
+## Quick Guide to Docker Commands
 
-Downloading and Running Docker Images
+### Managing Images
 
-Pull an Image
+Download an image:
 
-docker pull [image]:[version]
+    docker pull [image]:[version]
 
-Downloads a specific image and version to your local system.
+Delete an image: 
 
-Run an Image
+    docker rmi [image]
 
-docker run [image]:[version]
+Export an image:
 
-Runs the specified image. If the image is not available locally, it will download it first.
+    docker export [CONTAINER ID] > [filename.tar]
 
-Managing Containers
+Import an image: 
 
-Check Running Containers
+    cat [filename.tar] | docker import - [user]/[image]:[version]
 
-List currently running containers:
+### Running Containers
 
-docker ps
+Start a container:
 
-List the last [number] of containers:
+    docker run [image]:[version]
 
-docker ps -n [number]
+Start with a command-line interface:
 
-List all containers:
+    docker run -it [image] /bin/bash
 
-docker ps -a
+Start a stopped container:
 
-List container IDs only:
+    docker start [CONTAINER ID]
 
-docker ps -q
+Restart a container:
 
-Rename a Container
+    docker restart [CONTAINER ID]
 
-docker run --name=[new_name] [image] /bin/bash
+Stop a container:
 
-Assigns a custom name to a container.
+    docker stop [CONTAINER ID]
 
-Start an Image with Command Prompt
+Force stop and remove:
 
-docker run -it [image] /bin/bash
+    docker rm -f [CONTAINER ID]
 
-Exit the container: Use exit to close the container.
+Rename a container:
 
-Detach from the container without closing: Use Ctrl + P + Q.
+    docker run --name=[new_name] [image]
 
-Restart a Stopped Container
+### Container Status and Logs
 
-docker start [CONTAINER ID]
+Check running containers: 
 
-Stop a Container
+    docker ps
 
-docker stop [CONTAINER ID]
+Check all containers:
 
-Delete Containers and Images
+    docker ps -a
 
-Delete a stopped container:
+Fetch logs:
 
-docker rm [CONTAINER ID]
+    docker logs [CONTAINER ID]
 
-Delete an image:
+Inspect detailed information: 
 
-docker rmi [image]
+    docker inspect [CONTAINER ID]
 
-Force delete a container:
+### Working with Container Files
 
-docker rm -f [CONTAINER ID]
+Copy files from container to host:
 
-Copying Files
+    docker cp [CONTAINER ID]:[container_path] [host_path]
 
-Copy Files Between Host and Container
+View filesystem changes:
 
-docker cp [CONTAINER ID]:[container_path] [host_path]
+    docker diff [CONTAINER ID]
 
-Example:
+### Container Operations
 
-docker cp [CONTAINER ID]:/path/to/file /host/destination
+Attach to a running container:
 
-Exporting and Importing Images
+    docker attach [CONTAINER ID]
 
-Export a Container as a TAR File
+Run a command in a container:
 
-docker export [CONTAINER ID] > [file_name.tar]
+    docker exec -it [CONTAINER ID] /bin/bash
 
-Import an Image from a TAR File
+Pause a container: 
 
-cat [file_name.tar] | docker import - [image_user]/[image_name]:[version]
+    docker pause [CONTAINER ID]
 
-Advanced Commands
+Unpause a container:
 
-Inspect Container Details
+    docker unpause [CONTAINER ID]
 
-docker inspect [CONTAINER ID]
+### Saving and Loading Images
 
-View Container Logs
+Save an image: 
 
-docker logs [CONTAINER ID]
+    docker save [image] > [filename.tar]
 
-Monitor Running Processes
+Load an image:
 
-docker top [CONTAINER ID]
+    docker load < [filename.tar]
 
-Pause and Unpause Containers
+### Searching and Tagging Images
 
-Pause:
+Search for an image: 
 
-docker pause [CONTAINER ID]
+    docker search [term]
 
-Unpause:
+Tag an image:
 
-docker unpause [CONTAINER ID]
+    docker tag [image] [repository]:[tag]
 
-Tagging and Pushing Images
+### Additional Notes
 
-Add a tag to an image:
+Use docker info to view system-wide information about your Docker setup.
 
-docker tag [image] [repository]:[tag]
+Use docker version to check the version of your Docker installation.
 
-Push an image to Docker Hub:
+To troubleshoot issues, inspect containers with docker inspect or view logs using docker logs.
 
-docker push [repository]:[tag]
+Tips for Managing Containers
 
-Additional Information
+To detach from a running container without stopping it, use 
 
-This guide includes both basic and advanced Docker commands to help streamline your container management workflow. For more detailed explanations, refer to the official Docker documentation.
+    Ctrl + P + Q.
+
+If a container is using an image you want to delete, you must remove the container first.
 
 Happy Dockering!
 
